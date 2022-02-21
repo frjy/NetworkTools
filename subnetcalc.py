@@ -5,10 +5,11 @@
 import ipaddress
 import sys
 
+#Creates IP Address class from ipaddress module
 IP_Addr = ipaddress.ip_interface(sys.argv[1])
 
-Net_Addr = IP_Addr.network
-pref_len = int(IP_Addr.with_prefixlen.split('/')[1])
+Net_Addr = IP_Addr.network  
+pref_len = int(IP_Addr.with_prefixlen.split('/')[1]) #changes output to interger for use later in script
 Mask = IP_Addr.with_netmask
 wildcard = IP_Addr.hostmask
 broadcast_address = Net_Addr.broadcast_address
@@ -24,6 +25,7 @@ print('Last IP : ' , list(Net_Addr.hosts())[-1])
 print('Hosts : ' , Net_Addr.num_addresses)
 print('-Private: ' , IP_Addr.is_private , ' -Link_Local: ', IP_Addr.is_link_local, ' -Global, ', IP_Addr.is_global)
 
+#Block of code is used to find class boundries and set ip_class
 if IP_Addr.ip < ipaddress.IPv4Address('126.255.255.255'):
     print('Class: A')
     ip_class = 'A'
@@ -39,11 +41,12 @@ elif IP_Addr.ip < ipaddress.IPv4Address('223.255.255.255'):
 
 print('\nSubnet break down:')
 
+#Loop through smaller subnets and print out hosts and subnets or supernets depending on class
 for i in range(pref_len + 1  , 31):
     
     if ip_class == 'A':
         subnets = 2 ** (i - pref_len)
-        if i < 8:
+        if i < 8: 
             print('/', i, ' = ' , subnets , 'SuperNets')
         else:
             hosts = 2 ** (32 - i) - 2
