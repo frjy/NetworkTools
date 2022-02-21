@@ -1,7 +1,6 @@
 
 #!/usr/bin/env python3
-# Use: ./subnet.py <ip/cidr>
-# Alt: ./subnet.py <ip> <mask>
+#Code to Calculate hosts and subnets from given IP address 
 
 import ipaddress
 import sys
